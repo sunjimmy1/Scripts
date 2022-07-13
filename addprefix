@@ -1,0 +1,17 @@
+#!/bin/bash
+#A little script I made to add '#!/usr/bin/env python' the 
+#beginning of each python file in the directory so it can be run
+#straight from the command line
+for file in *.py; do
+    [ -f "$file" ] || break
+    echo $file
+    if [[ $(head -1 $file) != '#!/usr/bin/env python' ]]; 
+    then 
+	(echo "#!/usr/bin/env python" && cat $file) > temp
+	cat temp > $file
+	rm temp
+	chmod +x $file
+    else 
+	echo "$file has the header"
+    fi	
+done
